@@ -1,0 +1,34 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="{{ url_for('index') }}">MyFavoriteNotes</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        {% if session.logged_in %}
+          {% if title.find("notes") != -1 %}
+            <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('profile', username=user.username) }}">My Profile</a></li>
+          {% else %}
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="active"><a href="{{ url_for('profile', username=session['username']) }}">My Profile</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+        {% else %}
+          {% if title == 'Log In' %}
+            <li class="active"><a href="{{ url_for('login') }}">Log In</a></li>
+            <li ><a href="{{ url_for('join') }}">Join Us</a></li>
+          {% else %}
+            <li ><a href="{{ url_for('login') }}">Log In</a></li>
+            <li class="active"><a href="{{ url_for('join') }}">Join Us</a></li>
+          {% endif %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

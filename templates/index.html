@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block scrypts %}
+    <script src="{{ url_for('static', filename='js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/masonry.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
+    <script type="text/javascript">
+    $(function() {
+      new Notes.Editor();
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
+  <form action="." class="form" method="post" id="note-form">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.note.label }}:
+      <br>
+      {{ form.note(class_="form-control form-text") }}
+      {% for error in form.note.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <button class="btn btn-primary btn-xs" type="submit">
+      <span class="glyphicon glyphicon-plus"></span> Add Note
+    </button>  </form>
+    <br>
+    <ul class="list-unstyled notes">
+      {% for note in notes %}
+        {% include 'note.html' %}
+      {% endfor %}
+    </ul>
+  <div style="clear:both;"></div>
+{% endblock %}
